@@ -3,7 +3,7 @@
 # A E T H E R
 ### The Upper Atmosphere | Premium Weather Dashboard
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 ![React](https://img.shields.io/badge/React-18-61dafb.svg?style=flat&logo=react)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.0-38b2ac.svg?style=flat&logo=tailwind-css)
 
