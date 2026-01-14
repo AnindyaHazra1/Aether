@@ -61,7 +61,12 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
 
     // Unix timestamp + timezone offset to Local Time String
     const formatTime = (timestamp) => {
-        return new Date((timestamp + timezone) * 1000).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'UTC' });
+        return new Date((timestamp + timezone) * 1000).toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: units.time !== '24h',
+            timeZone: 'UTC'
+        });
     };
 
     const visibilityKm = (visibility / 1000).toFixed(1);

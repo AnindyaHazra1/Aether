@@ -5,11 +5,12 @@ const cors = require('cors');
 const axios = require('axios');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5001;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/weather_app', {
@@ -23,6 +24,10 @@ const searchSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now }
 });
 const Search = mongoose.model('Search', searchSchema);
+
+// Auth Routes
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
 
 // Routes
 app.get('/', (req, res) => {

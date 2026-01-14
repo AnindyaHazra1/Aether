@@ -1,6 +1,7 @@
-import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-// Using simple SVG icons to match the design style directly
+// Icons components remain same...
 const DashboardIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
         <rect x="3" y="3" width="7" height="7" rx="2" fill="currentColor" />
@@ -24,16 +25,27 @@ const SettingsIcon = () => (
     </svg>
 );
 
-const Sidebar = ({ activePage = 'dashboard', onNavigate }) => {
+const Sidebar = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user } = useAuth();
+
+    // Check active path helper
+    const isActive = (path) => {
+        if (path === '/' && location.pathname === '/') return true;
+        if (path !== '/' && location.pathname.startsWith(path)) return true;
+        return false;
+    };
+
     const menuItems = [
-        { Icon: DashboardIcon, label: 'Dashboard', id: 'dashboard' },
-        { Icon: MapIcon, label: 'Map', id: 'map' },
-        { Icon: SettingsIcon, label: 'Settings', id: 'settings' },
+        { Icon: DashboardIcon, label: 'Dashboard', path: '/' },
+        { Icon: MapIcon, label: 'Map', path: '/map' },
+        { Icon: SettingsIcon, label: 'Settings', path: '/settings' },
     ];
 
     return (
         <div className="hidden md:flex flex-col w-16 bg-slate-800/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-[2rem] py-6 items-center gap-6 h-[75vh] mt-12 ml-4">
-            <div className="w-10 h-10 flex items-center justify-center mb-2 text-blue-400">
+            <div className="w-10 h-10 flex items-center justify-center mb-2 text-blue-400 cursor-pointer" onClick={() => navigate('/')}>
                 {/* Simple Logo Icon */}
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M4.93 19.07L6.34 17.66M19.07 19.07L17.66 17.66M4.93 4.93L6.34 6.34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -44,12 +56,12 @@ const Sidebar = ({ activePage = 'dashboard', onNavigate }) => {
             <div className="flex flex-col gap-6 w-full items-center flex-1">
                 {menuItems.map((item) => (
                     <button
-                        key={item.id}
-                        onClick={() => onNavigate && onNavigate(item.id)}
-                        className={`flex flex-col items-center gap-1 transition-colors duration-200 group relative ${activePage === item.id ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                        key={item.path}
+                        onClick={() => navigate(item.path)}
+                        className={`flex flex-col items-center gap-1 transition-colors duration-200 group relative ${isActive(item.path) ? 'text-white' : 'text-gray-500 hover:text-gray-300'
                             }`}
                     >
-                        {activePage === item.id && (
+                        {isActive(item.path) && (
                             <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-lg"></div>
                         )}
                         <item.Icon />
@@ -58,9 +70,24 @@ const Sidebar = ({ activePage = 'dashboard', onNavigate }) => {
             </div>
 
             <div className="mt-auto">
-                <div className="w-12 h-12 rounded-full border-2 border-white/20 overflow-hidden shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80" alt="User" className="w-full h-full object-cover" />
-                </div>
+                <button
+                    onClick={() => navigate(user ? '/profile' : '/login')}
+                    className={`w-12 h-12 rounded-full border-2 overflow-hidden shadow-lg transition-all ${user ? 'border-teal-400' : 'border-white/20 hover:border-blue-400'}`}
+                >
+                    {user ? (
+                        <img
+                            src={
+                                (!user.avatarId || user.avatarId === 'default')
+                                    ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`
+                                    : (user.avatarId.startsWith('/uploads') ? `http://localhost:5001${user.avatarId}` : user.avatarId)
+                            }
+                            alt={user.username}
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <svg className="w-full h-full p-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    )}
+                </button>
             </div>
         </div>
     );

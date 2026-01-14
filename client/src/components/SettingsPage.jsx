@@ -14,6 +14,10 @@ const SettingsPage = ({ units, setUnits }) => {
         setUnits(prev => ({ ...prev, pressure: value }));
     };
 
+    const toggleTime = (value) => {
+        setUnits(prev => ({ ...prev, time: value }));
+    };
+
     return (
         <div className="flex flex-col h-full gap-8 max-w-4xl mx-auto">
             {/* Header */}
@@ -106,6 +110,28 @@ const SettingsPage = ({ units, setUnits }) => {
                                 </button>
                             </div>
                         </div>
+
+                        {/* Time Format */}
+                        <div className="flex items-center justify-between bg-[#111827]/50 p-5 rounded-2xl border border-white/5">
+                            <div>
+                                <h3 className="text-lg font-medium text-white mb-1">Time Format</h3>
+                                <p className="text-sm text-gray-400">Choose between 12-hour and 24-hour time</p>
+                            </div>
+                            <div className="flex bg-[#1f2937] p-1 rounded-xl">
+                                <button
+                                    onClick={() => toggleTime('12h')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${units.time === '12h' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                >
+                                    12 Hour
+                                </button>
+                                <button
+                                    onClick={() => toggleTime('24h')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${units.time === '24h' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                                >
+                                    24 Hour
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -115,17 +141,37 @@ const SettingsPage = ({ units, setUnits }) => {
                         <span className="p-2 bg-purple-500/20 rounded-lg text-purple-400">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </span>
-                        About
+                        About Application
                     </h2>
-                    <div className="bg-[#111827]/50 p-6 rounded-2xl border border-white/5 text-gray-300 space-y-4">
-                        <p>
-                            <strong className="text-white block mb-1">Weather Forecasting App</strong>
-                            A powerful, aesthetic weather dashboard providing real-time data, detailed forecasts, and global weather map visualizations.
-                        </p>
-                        <div className="flex gap-4 text-sm mt-4">
-                            <span className="px-3 py-1 bg-white/5 rounded-full border border-white/10">Version 1.2.0</span>
-                            <span className="px-3 py-1 bg-white/5 rounded-full border border-white/10">React + Vite</span>
-                            <span className="px-3 py-1 bg-white/5 rounded-full border border-white/10">OpenWeatherMap API</span>
+                    <div className="bg-[#111827]/50 p-8 rounded-2xl border border-white/5 text-gray-300 relative overflow-hidden group">
+                        {/* Subtle Background Accent */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full blur-2xl transition-all duration-700 group-hover:bg-purple-500/20"></div>
+
+                        <div className="relative z-10 flex flex-col gap-6">
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">Weather Forecasting</h3>
+                                <p className="text-gray-400 leading-relaxed max-w-2xl">
+                                    A next-generation weather dashboard designed for clarity and precision.
+                                    Providing real-time atmospheric data, advanced forecasting, and immersive visualizations
+                                    to help you stay ahead of the elements.
+                                </p>
+                            </div>
+
+                            <div className="h-px bg-white/10 w-full"></div>
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Current Version</span>
+                                    <span className="text-white font-mono mt-1">v2.0.0-beta</span>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold block mb-1">Status</span>
+                                    <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-medium border border-green-500/20">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                        System Operational
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

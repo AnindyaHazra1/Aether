@@ -15,31 +15,41 @@ const WeatherCard = ({ data, units }) => {
     const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@4x.png`;
 
     // Live Clock State
-    const [localTime, setLocalTime] = React.useState(new Date());
+    const [timeString, setTimeString] = React.useState("");
+    const [dayName, setDayName] = React.useState("");
 
     React.useEffect(() => {
-        // Update time every second
-        const timer = setInterval(() => {
-            const now = new Date();
-            // Calculate city time: UTC time + timezone offset (seconds) * 1000
-            // Note: Date.getTime() is local, but we want UTC based calculation
-            // easier way: get UTC timestamp, add offset, make new Date
-            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000); // adjust local to UTC
-            const cityTime = new Date(utcTime + (timezone * 1000));
-            setLocalTime(cityTime);
-        }, 1000);
+        const updateTime = () => {
+            const now = Date.now(); // Current UTC timestamp in ms
+            // Shift time by timezone offset (seconds * 1000)
+            // This gives us a timestamp that "looks like" the local time when viewed in UTC
+            const localTimestamp = now + (timezone * 1000);
+            const dateObj = new Date(localTimestamp);
 
-        // Initial set (so we don't wait 1s)
-        const now = new Date();
-        const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-        const cityTime = new Date(utcTime + (timezone * 1000));
-        setLocalTime(cityTime);
+            const is24Hour = units.time === '24h';
+
+            // Format using UTC timezone to match the shifted timestamp
+            const timeStr = dateObj.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: !is24Hour,
+                timeZone: 'UTC'
+            });
+
+            const dayStr = dateObj.toLocaleDateString('en-US', {
+                weekday: 'long',
+                timeZone: 'UTC'
+            });
+
+            setTimeString(timeStr);
+            setDayName(dayStr);
+        };
+
+        const timer = setInterval(updateTime, 1000);
+        updateTime(); // Initial call
 
         return () => clearInterval(timer);
-    }, [timezone]); // Re-run if city/timezone changes
-
-    const dayName = localTime.toLocaleDateString('en-US', { weekday: 'long' });
-    const timeString = localTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    }, [timezone, units.time]); // Re-run if timezone OR format changes
 
     return (
         <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden min-h-[300px] flex flex-col justify-between group">
