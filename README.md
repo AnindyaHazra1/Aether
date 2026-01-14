@@ -51,37 +51,6 @@ Aether isn't just about showing numbers; it's about *feeling* the weather.
 *   **Weather Data**: OpenWeatherMap API
 *   **Icons**: Lucide React & Custom SVG Assets
 
-## 🚀 Getting Started
-
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/AnindyaHazra1/Aether.git
-    cd Aether
-    ```
-
-2.  **Install Dependencies**
-    ```bash
-    # Install Client
-    cd client
-    npm install
-
-    # Install Server (Optional for backend proxy)
-    cd ../server
-    npm install
-    ```
-
-3.  **Environment Setup**
-    Create a `.env` file in the `client` directory:
-    ```env
-    VITE_WEATHER_API_KEY=your_api_key_here
-    ```
-
-4.  **Launch Aether**
-    ```bash
-    # Run Frontend
-    npm run dev
-    ```
-
 ## 🤝 Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
