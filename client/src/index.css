@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer utilities {
+
+    /* Ultra-Premium Glassmorphism Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        /* Very thin vertical */
+        height: 5px;
+        /* Very thin horizontal */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+        margin-block: 4px;
+        /* Slight offset from ends */
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        /* Almost invisible by default */
+        border-radius: 100vh;
+        /* Perfect pill shape */
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        /* Subtle glass edge */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Hover State - Glows and becomes visible */
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.6);
+        /* Bright white on direct interaction */
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        /* Premium Glow Effect */
+    }
+
+    /* Firefox */
+    .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+    }
+}
