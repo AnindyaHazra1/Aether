@@ -26,7 +26,9 @@ export const AuthProvider = ({ children }) => {
                 setUser(res.data);
             } catch (error) {
                 console.error("Auth Load Error:", error);
-                logout();
+                if (error.response && error.response.status === 401) {
+                    logout();
+                }
             } finally {
                 setLoading(false);
             }
