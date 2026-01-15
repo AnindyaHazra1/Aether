@@ -124,7 +124,8 @@ const Profile = () => {
             return `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`;
         }
         if (userAvatarId.startsWith('/uploads')) {
-            const url = `http://localhost:5001${userAvatarId}`;
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+            const url = `${baseUrl}${userAvatarId}`;
             console.log("Generated URL:", url);
             return url;
         }

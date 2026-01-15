@@ -79,7 +79,7 @@ const Sidebar = () => {
                             src={
                                 (!user.avatarId || user.avatarId === 'default')
                                     ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`
-                                    : (user.avatarId.startsWith('/uploads') ? `http://localhost:5001${user.avatarId}` : user.avatarId)
+                                    : (user.avatarId.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL || 'http://localhost:5001'}${user.avatarId}` : user.avatarId)
                             }
                             alt={user.username}
                             className="w-full h-full object-cover"
