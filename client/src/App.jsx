@@ -80,30 +80,48 @@ function App() {
 
     const { dt, sys, weather: weatherDetails } = weather;
     const condition = weatherDetails[0].main.toLowerCase();
-    const isDay = dt >= sys.sunrise && dt < sys.sunset;
+
+    // Explicit Conversions for Safety
+    const currentTime = Number(dt);
+    const sunrise = Number(sys.sunrise);
+    const sunset = Number(sys.sunset);
+
+    const isDay = currentTime >= sunrise && currentTime < sunset;
+
+    console.log("Background Logic Debug:", {
+      condition,
+      currentTime,
+      sunrise,
+      sunset,
+      isDay,
+      readableTime: new Date(currentTime * 1000).toLocaleTimeString(),
+      readableSunrise: new Date(sunrise * 1000).toLocaleTimeString(),
+      readableSunset: new Date(sunset * 1000).toLocaleTimeString()
+    });
 
     // Night Time Backgrounds
     if (!isDay) {
-      if (condition.includes('clear')) return 'https://images.unsplash.com/photo-1519681393798-38e43269d877?q=80&w=2070&auto=format&fit=crop'; // Deep Blue Starry Night
-      if (condition.includes('cloud')) return 'https://images.unsplash.com/photo-1528629250003-1383c44cb948?q=80&w=2070&auto=format&fit=crop'; // Night Clouds
-      if (condition.includes('rain') || condition.includes('drizzle')) return 'https://images.unsplash.com/photo-1536431311719-398b18a4b901?q=80&w=2070&auto=format&fit=crop'; // Night Rain
-      if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) return 'https://images.unsplash.com/photo-1509653087866-91f6c2ab59f2?q=80&w=1970&auto=format&fit=crop'; // Night Mist/Fog
-      if (condition.includes('snow')) return 'https://images.unsplash.com/photo-1478265867563-78890a609fe2?q=80&w=2070&auto=format&fit=crop'; // Night Snow
+      if (condition.includes('clear')) return 'https://images.unsplash.com/photo-1687506765495-88a298ab900b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Starry Night (Verified)
+      if (condition.includes('cloud')) return 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Night Clouds (Using Day Cloud for now as it's darkish, or better: fallback)
+      if (condition.includes('rain') || condition.includes('drizzle')) return 'https://images.unsplash.com/photo-1700516698182-310fed2ff6de?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Night Rain (Urban)
+      if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) return 'https://images.unsplash.com/photo-1639322223504-8a724a7c0b5c?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Night Mist (Urban)
+      if (condition.includes('snow')) return 'https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Night Snow (Verified)
 
-      return 'https://images.unsplash.com/photo-1519681393798-38e43269d877?q=80&w=2070&auto=format&fit=crop'; // Fallback Deep Starry Night
+      return 'https://images.unsplash.com/photo-1687506765495-88a298ab900b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Fallback Night (Verified)
     }
 
-    // Day Time Backgrounds - Literal Interpretations
-    if (condition.includes('clear')) return 'https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop'; // Literal Blue Sky & Sun
-    if (condition.includes('cloud')) return 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=1951&auto=format&fit=crop'; // Distinct Clouds
-    if (condition.includes('rain') || condition.includes('drizzle')) return 'https://images.unsplash.com/photo-1428592953211-0750befadd26?q=80&w=2070&auto=format&fit=crop'; // Rainy Window
-    if (condition.includes('snow')) return 'https://images.unsplash.com/photo-1478265867563-78890a609fe2?q=80&w=2070&auto=format&fit=crop'; // Snow
-    if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) return 'https://images.unsplash.com/photo-1543968996-ee822b8176ba?q=80&w=2028&auto=format&fit=crop'; // Day Mist
+    // Day Time Backgrounds
+    if (condition.includes('clear')) return 'https://images.unsplash.com/photo-1605158080227-fd61e78bdc8b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Blue Sky (Verified)
+    if (condition.includes('cloud')) return 'https://images.unsplash.com/photo-1605158080227-fd61e78bdc8b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Day Clouds (Using Clear Day)
+    if (condition.includes('rain') || condition.includes('drizzle')) return 'https://images.unsplash.com/photo-1532690505755-416f854618da?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Day Rain (Verified)
+    if (condition.includes('snow')) return 'https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Day Snow (Verified)
+    if (condition.includes('mist') || condition.includes('fog') || condition.includes('haze')) return 'https://images.unsplash.com/photo-1532690505755-416f854618da?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Day Mist (Using Rain)
 
-    return 'https://images.unsplash.com/photo-1601297183305-6df142704ea2?q=80&w=1974&auto=format&fit=crop'; // Default Blue Sky
+    return 'https://images.unsplash.com/photo-1605158080227-fd61e78bdc8b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; // Default Day Sky (Verified)
   };
 
   const bgImage = getBackgroundImage(weatherData); // Ensure this function exists!
+  console.log("Applied Background Image:", bgImage); // DEBUG LOG
 
   // Gatekeeper Logic
   const isRestricted = !user && location.pathname === '/';
@@ -116,7 +134,7 @@ function App() {
   return (
     <div
       className="h-screen text-white font-sans flex relative overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out"
-      style={{ backgroundImage: `url(${bgImage})` }}
+      style={{ backgroundImage: `url("${bgImage}")` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/30 via-black/50 to-gray-900/60 backdrop-blur-[1px] z-0"></div>
 

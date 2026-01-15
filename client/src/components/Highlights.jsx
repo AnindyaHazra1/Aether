@@ -212,7 +212,12 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
                                 className="transition-all duration-1000 ease-out"
                             />
                             <text x="50" y="34" textAnchor="middle" className="text-lg font-bold fill-white">{uvIndex}</text>
-                            <text x="50" y="46" textAnchor="middle" className="text-[6px] fill-gray-400 uppercase tracking-widest">UV Index</text>
+                            <text x="50" y="46" textAnchor="middle" className="text-[6px] fill-gray-400 uppercase tracking-widest">
+                                {Number(uvIndex) <= 2 ? "Low" :
+                                    Number(uvIndex) <= 5 ? "Moderate" :
+                                        Number(uvIndex) <= 7 ? "High" :
+                                            Number(uvIndex) <= 10 ? "Very High" : "Extreme"}
+                            </text>
                         </svg>
                     </div>
                 </HighlightCard>
