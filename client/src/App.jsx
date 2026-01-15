@@ -134,7 +134,7 @@ function App() {
 
   return (
     <div
-      className="h-screen text-white font-sans flex relative overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out"
+      className="h-[100dvh] text-white font-sans flex relative overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out"
       style={{ backgroundImage: `url("${bgImage}")` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/30 via-black/50 to-gray-900/60 backdrop-blur-[1px] z-0"></div>
@@ -158,13 +158,17 @@ function App() {
 
         {/* Sidebar - Hide on Login/Signup */}
         {location.pathname !== '/login' && location.pathname !== '/signup' && (
-          <div className="absolute md:relative z-20 h-full">
-            <Sidebar />
+          <div className="absolute md:relative z-20 h-full pointer-events-none md:pointer-events-auto">
+            {/* Pointer events none on wrapper to let clicks pass through on mobile if needed, but Sidebar component handles its own layout */}
+            <div className="pointer-events-auto h-full">
+              <Sidebar />
+            </div>
           </div>
         )}
 
         {/* Content */}
-        <main className={`flex-1 p-6 pt-10 h-screen overflow-hidden relative z-10 ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
+        {/* Content */}
+        <main className={`flex-1 p-4 md:p-6 pt-4 md:pt-10 pb-24 md:pb-6 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
           {error && (
             <div className="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-bounce">
               {error}
@@ -174,89 +178,92 @@ function App() {
 
           <Routes>
             <Route path="/" element={
-              <div className="max-w-[1600px] mx-auto grid grid-cols-1 xl:grid-cols-[360px_1fr] gap-6 h-full">
-                <div className="flex flex-col gap-6 h-full overflow-y-auto pr-2 custom-scrollbar">
-                  {weatherData && <WeatherCard data={weatherData} units={units} />}
-                  {/* Map Preview */}
-                  <div className="bg-[#202B3B] rounded-[2rem] p-6 relative overflow-hidden group h-[300px] flex flex-col shrink-0">
-                    <div className="flex justify-between items-center mb-4 relative z-10 shrink-0">
-                      <h2 className="text-xl font-bold">Weather condition map</h2>
-                      <Link to="/map" className="bg-gray-800 hover:bg-gray-700 transition-colors rounded-lg px-3 py-1 text-xs text-gray-400 decoration-0">Expand</Link>
-                    </div>
-                    <div className="flex-1 rounded-xl overflow-hidden relative z-0">
-                      <Map weatherData={weatherData} />
+              <div className="max-w-[1600px] mx-auto flex flex-col gap-6 md:gap-8">
+                {/* Global Search Header */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
+                  <div className="flex items-center gap-4 w-full md:w-auto">
+                    <div className="bg-[#202B3B]/90 backdrop-blur-xl rounded-2xl px-4 py-3 flex items-center gap-3 border border-white/10 shadow-lg w-full md:w-96">
+                      <button onClick={() => handleSearch(searchQuery)}>
+                        <svg className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                      </button>
+                      <input
+                        type="text"
+                        placeholder="Search city..."
+                        className="bg-transparent border-none outline-none text-white text-base w-full placeholder-gray-500"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
+                      />
                     </div>
                   </div>
 
-                  {/* Favorites Quick Access */}
-                  {user && (user.location || (user.savedLocations && user.savedLocations.length > 0)) && (
-                    <div className="bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 shrink-0">
-                      <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-bold flex items-center gap-2">
-                          Favorite Locations
-                        </h2>
-
-                        {/* Default Location Button */}
-                        {user.location && (
-                          <button
-                            onClick={() => handleSearch(user.location)}
-                            className="px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600 hover:text-white text-blue-400 border border-blue-500/30 rounded-lg transition-all text-xs font-bold flex items-center gap-2"
-                            title={`Reset to Home: ${user.location}`}
-                          >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                            Home
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {/* Saved Locations */}
-                        {[...new Set(user.savedLocations || [])].map((city, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => handleSearch(city)}
-                            className="px-4 py-2 bg-slate-800/50 hover:bg-blue-600/20 hover:text-blue-400 border border-white/5 rounded-xl transition-all text-sm font-medium"
-                          >
-                            {city}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                  {/* Quick User Location Actions (Desktop) */}
+                  {user && user.location && (
+                    <button
+                      onClick={() => handleSearch(user.location)}
+                      className="hidden md:flex px-4 py-2 bg-blue-600/20 hover:bg-blue-600 hover:text-white text-blue-400 border border-blue-500/30 rounded-xl transition-all text-sm font-bold items-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                      <span>Back Home</span>
+                    </button>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-0 h-full overflow-hidden">
-                  {/* Search Bar */}
-                  <div className="flex justify-end items-center shrink-0">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-[#202B3B] rounded-full px-4 py-2 flex items-center gap-2 border border-gray-700">
-                        <button onClick={() => handleSearch(searchQuery)}>
-                          <svg className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </button>
-                        <input
-                          type="text"
-                          placeholder="Search..."
-                          className="bg-transparent border-none outline-none text-white text-sm w-32 md:w-48"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
-                        />
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+                  {/* Left Column (Weather Card & Quick Info) */}
+                  <div className="xl:col-span-1 flex flex-col gap-6">
+                    {weatherData && <WeatherCard data={weatherData} units={units} />}
+
+                    {/* Map Preview */}
+                    <div className="bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 relative overflow-hidden group h-[280px] flex flex-col shrink-0 border border-white/5 shadow-lg">
+                      <div className="flex justify-between items-center mb-4 relative z-10 shrink-0">
+                        <h2 className="text-lg font-bold text-white">Radar</h2>
+                        <Link to="/map" className="bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-3 py-1 text-xs text-white decoration-0">Expand</Link>
+                      </div>
+                      <div className="flex-1 rounded-xl overflow-hidden relative z-0">
+                        <Map weatherData={weatherData} />
                       </div>
                     </div>
+
+                    {/* Favorites Section */}
+                    {user && (user.location || (user.savedLocations && user.savedLocations.length > 0)) && (
+                      <div className="bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 shrink-0 border border-white/5 shadow-lg">
+                        <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                          <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                          Saved Locations
+                        </h2>
+                        <div className="flex flex-wrap gap-2">
+                          {user.location && (
+                            <button onClick={() => handleSearch(user.location)} className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold shadow-md shadow-blue-500/20">Home</button>
+                          )}
+                          {[...new Set(user.savedLocations || [])].map((city, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => handleSearch(city)}
+                              className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-600 text-gray-200 border border-white/5 rounded-lg transition-all text-xs font-medium"
+                            >
+                              {city}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  {/* Highlights */}
-                  <div className="shrink-0 flex-1 overflow-y-auto custom-scrollbar">
+
+                  {/* Right Column (Highlights) */}
+                  <div className="xl:col-span-3">
                     <Highlights weatherData={weatherData} aqiData={aqiData} forecastData={forecastData} forecastError={forecastError} units={units} />
                   </div>
                 </div>
               </div>
             } />
 
-            <Route path="/map" element={<div className="h-full w-full"><MapPage weatherData={weatherData} /></div>} />
-            <Route path="/settings" element={<div className="h-full w-full p-4"><SettingsPage units={units} setUnits={setUnits} /></div>} />
+            <Route path="/map" element={<div className="h-full w-full pb-20 md:pb-0"><MapPage weatherData={weatherData} /></div>} />
+            <Route path="/settings" element={<div className="h-full w-full p-4 pb-20 md:pb-0 overflow-y-auto"><SettingsPage units={units} setUnits={setUnits} /></div>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<div className="h-full w-full overflow-y-auto pb-20 md:pb-0"><Profile /></div>} />
           </Routes>
         </main>
       </div>

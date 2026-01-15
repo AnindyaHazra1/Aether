@@ -44,52 +44,94 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="hidden md:flex flex-col w-16 bg-slate-800/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-[2rem] py-6 items-center gap-6 h-[75vh] mt-12 ml-4">
-            <div className="w-10 h-10 flex items-center justify-center mb-2 text-blue-400 cursor-pointer" onClick={() => navigate('/')}>
-                {/* Simple Logo Icon */}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M4.93 19.07L6.34 17.66M19.07 19.07L17.66 17.66M4.93 4.93L6.34 6.34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
-                </svg>
-            </div>
+        <>
+            {/* Desktop Sidebar */}
+            <div className="hidden md:flex flex-col w-16 bg-slate-800/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-[2rem] py-6 items-center gap-6 h-[75vh] mt-12 ml-4">
+                <div className="w-10 h-10 flex items-center justify-center mb-2 text-blue-400 cursor-pointer" onClick={() => navigate('/')}>
+                    {/* Simple Logo Icon */}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M4.93 19.07L6.34 17.66M19.07 19.07L17.66 17.66M4.93 4.93L6.34 6.34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+                    </svg>
+                </div>
 
-            <div className="flex flex-col gap-6 w-full items-center flex-1">
-                {menuItems.map((item) => (
+                <div className="flex flex-col gap-6 w-full items-center flex-1">
+                    {menuItems.map((item) => (
+                        <button
+                            key={item.path}
+                            onClick={() => navigate(item.path)}
+                            className={`flex flex-col items-center gap-1 transition-colors duration-200 group relative ${isActive(item.path) ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                                }`}
+                        >
+                            {isActive(item.path) && (
+                                <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-lg"></div>
+                            )}
+                            <item.Icon />
+                        </button>
+                    ))}
+                </div>
+
+                <div className="mt-auto">
                     <button
-                        key={item.path}
-                        onClick={() => navigate(item.path)}
-                        className={`flex flex-col items-center gap-1 transition-colors duration-200 group relative ${isActive(item.path) ? 'text-white' : 'text-gray-500 hover:text-gray-300'
-                            }`}
+                        onClick={() => navigate(user ? '/profile' : '/login')}
+                        className={`w-12 h-12 rounded-full border-2 overflow-hidden shadow-lg transition-all ${user ? 'border-teal-400' : 'border-white/20 hover:border-blue-400'}`}
                     >
-                        {isActive(item.path) && (
-                            <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-lg"></div>
+                        {user ? (
+                            <img
+                                src={
+                                    (!user.avatarId || user.avatarId === 'default')
+                                        ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`
+                                        : (user.avatarId.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL || 'http://localhost:5001'}${user.avatarId}` : user.avatarId)
+                                }
+                                alt={user.username}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <svg className="w-full h-full p-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         )}
-                        <item.Icon />
                     </button>
-                ))}
+                </div>
             </div>
 
-            <div className="mt-auto">
-                <button
-                    onClick={() => navigate(user ? '/profile' : '/login')}
-                    className={`w-12 h-12 rounded-full border-2 overflow-hidden shadow-lg transition-all ${user ? 'border-teal-400' : 'border-white/20 hover:border-blue-400'}`}
-                >
-                    {user ? (
-                        <img
-                            src={
-                                (!user.avatarId || user.avatarId === 'default')
-                                    ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`
-                                    : (user.avatarId.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL || 'http://localhost:5001'}${user.avatarId}` : user.avatarId)
-                            }
-                            alt={user.username}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <svg className="w-full h-full p-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    )}
-                </button>
+            {/* Mobile Bottom Navigation */}
+            <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-slate-900/80 backdrop-blur-xl border-t border-white/10 pb-safe pt-3 px-6 shadow-2xl">
+                <div className="flex justify-between items-center mb-2">
+                    {menuItems.map((item) => (
+                        <button
+                            key={item.path}
+                            onClick={() => navigate(item.path)}
+                            className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${isActive(item.path) ? 'text-blue-400 bg-blue-500/10' : 'text-gray-400'}`}
+                        >
+                            <item.Icon />
+                            <span className="text-[10px] font-medium">{item.label}</span>
+                        </button>
+                    ))}
+
+                    {/* Profile Item for Mobile */}
+                    <button
+                        onClick={() => navigate(user ? '/profile' : '/login')}
+                        className={`flex flex-col items-center gap-1 p-1 rounded-xl transition-all ${isActive('/profile') ? 'text-blue-400' : 'text-gray-400'}`}
+                    >
+                        <div className={`w-7 h-7 rounded-full border overflow-hidden ${user ? 'border-teal-400' : 'border-gray-500'}`}>
+                            {user ? (
+                                <img
+                                    src={
+                                        (!user.avatarId || user.avatarId === 'default')
+                                            ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username || 'User')}&background=random&color=fff&size=200`
+                                            : (user.avatarId.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL || 'http://localhost:5001'}${user.avatarId}` : user.avatarId)
+                                    }
+                                    alt={user.username}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <svg className="w-full h-full p-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            )}
+                        </div>
+                        <span className="text-[10px] font-medium">Profile</span>
+                    </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

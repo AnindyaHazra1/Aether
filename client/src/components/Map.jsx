@@ -31,7 +31,7 @@ const Map = ({ weatherData }) => {
     console.log("Map API Key:", API_KEY ? "Present" : "Missing");
 
     return (
-        <div className="h-full w-full rounded-[2rem] overflow-hidden relative z-0">
+        <div className="h-full w-full overflow-hidden relative z-0">
             {/* Custom Styles to Override Leaflet Defaults */}
             <style>
                 {`

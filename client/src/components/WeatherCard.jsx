@@ -52,7 +52,7 @@ const WeatherCard = ({ data, units }) => {
     }, [timezone, units.time]); // Re-run if timezone OR format changes
 
     return (
-        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] pl-10 pr-2 pt-0 pb-24 shadow-2xl relative overflow-hidden min-h-[310px] flex flex-col justify-between group">
+        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] pl-6 md:pl-10 pr-2 pt-0 pb-24 shadow-2xl relative overflow-hidden min-h-[310px] flex flex-col justify-between group">
 
             {/* Background Glow Effect */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[100px] group-hover:bg-purple-500/40 transition-all duration-500"></div>
@@ -60,7 +60,7 @@ const WeatherCard = ({ data, units }) => {
             {/* Main Content Layout */}
             <div className="relative z-10 flex justify-between items-center gap-4">
                 <div>
-                    <h1 className="text-6xl lg:text-7xl font-bold text-white tracking-tighter drop-shadow-lg">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter drop-shadow-lg">
                         {temperature}°{units.temp === 'imperial' ? 'F' : ''}
                     </h1>
                     <p className="text-xl text-gray-300 capitalize mt-2 font-medium tracking-wide pl-2">{condition}</p>
@@ -76,7 +76,7 @@ const WeatherCard = ({ data, units }) => {
                         if (mainCondition.includes('clear')) {
                             if (isDay) {
                                 return (
-                                    <svg className="w-48 h-48 overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg className="w-28 h-28 md:w-48 md:h-48 overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <defs>
                                             <radialGradient id="gradSunCore" cx="32" cy="32" r="16" fx="32" fy="32">
                                                 <stop offset="0%" stopColor="#FFF" stopOpacity="1" />
@@ -103,7 +103,7 @@ const WeatherCard = ({ data, units }) => {
                             } else {
                                 // Moon Icon (Clear Night)
                                 return (
-                                    <svg className="w-40 h-40 animate-[pulse_6s_ease-in-out_infinite] overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg className="w-28 h-28 md:w-40 md:h-40 animate-[pulse_6s_ease-in-out_infinite] overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <defs>
                                             <linearGradient id="gradMoon" x1="10" y1="10" x2="50" y2="50">
                                                 <stop offset="0%" stopColor="#F8FAFC" />
@@ -128,7 +128,7 @@ const WeatherCard = ({ data, units }) => {
                             }
                         } else if (mainCondition.includes('clouds')) {
                             return (
-                                <svg className="w-40 h-40 overflow-visible" viewBox="0 0 64 64" fill="none">
+                                <svg className="w-28 h-28 md:w-40 md:h-40 overflow-visible" viewBox="0 0 64 64" fill="none">
                                     <defs>
                                         <linearGradient id="gradCloud" x1="20" y1="20" x2="50" y2="50">
                                             <stop offset="0%" stopColor="#E2E8F0" />
@@ -150,7 +150,7 @@ const WeatherCard = ({ data, units }) => {
                             );
                         } else if (mainCondition.includes('rain') || mainCondition.includes('drizzle')) {
                             return (
-                                <svg className="w-40 h-40 overflow-visible" viewBox="0 0 64 64" fill="none">
+                                <svg className="w-28 h-28 md:w-40 md:h-40 overflow-visible" viewBox="0 0 64 64" fill="none">
                                     <defs>
                                         <linearGradient id="gradRain" x1="10" y1="10" x2="50" y2="50">
                                             <stop offset="0%" stopColor="#94A3B8" />
@@ -163,7 +163,7 @@ const WeatherCard = ({ data, units }) => {
                             );
                         } else {
                             // Default Fallback
-                            return <img src={iconUrl} alt={condition} className="w-40 h-40 object-contain drop-shadow-2xl" />;
+                            return <img src={iconUrl} alt={condition} className="w-28 h-28 md:w-40 md:h-40 object-contain drop-shadow-2xl" />;
                         }
                     })()}
                 </div>
