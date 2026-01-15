@@ -52,7 +52,7 @@ const WeatherCard = ({ data, units }) => {
     }, [timezone, units.time]); // Re-run if timezone OR format changes
 
     return (
-        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden min-h-[300px] flex flex-col justify-between group">
+        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] pl-10 pr-2 pt-0 pb-24 shadow-2xl relative overflow-hidden min-h-[310px] flex flex-col justify-between group">
 
             {/* Background Glow Effect */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[100px] group-hover:bg-purple-500/40 transition-all duration-500"></div>
@@ -60,14 +60,14 @@ const WeatherCard = ({ data, units }) => {
             {/* Main Content Layout */}
             <div className="relative z-10 flex justify-between items-center gap-4">
                 <div>
-                    <h1 className="text-6xl lg:text-7xl font-bold text-white tracking-tighter shadow-lg drop-shadow-lg">
+                    <h1 className="text-6xl lg:text-7xl font-bold text-white tracking-tighter drop-shadow-lg">
                         {temperature}°{units.temp === 'imperial' ? 'F' : ''}
                     </h1>
                     <p className="text-xl text-gray-300 capitalize mt-2 font-medium tracking-wide pl-2">{condition}</p>
                 </div>
 
                 {/* Floating Large Icon */}
-                <div className="transform hover:scale-105 transition-transform duration-500 filter drop-shadow-2xl pr-4 pt-2">
+                <div className="transform hover:scale-105 transition-transform duration-500 filter drop-shadow-2xl">
                     {/* Render Custom Animated Icons based on condition */}
                     {(() => {
                         const mainCondition = weather[0].main.toLowerCase();
@@ -76,24 +76,28 @@ const WeatherCard = ({ data, units }) => {
                         if (mainCondition.includes('clear')) {
                             if (isDay) {
                                 return (
-                                    <svg className="w-40 h-40 animate-[pulse_4s_ease-in-out_infinite] overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg className="w-48 h-48 overflow-visible" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <defs>
-                                            <radialGradient id="gradSun" cx="32" cy="32" r="32" fx="32" fy="32">
-                                                <stop offset="0%" stopColor="#FFF7ED" />
-                                                <stop offset="60%" stopColor="#FBBF24" />
-                                                <stop offset="90%" stopColor="#F59E0B" />
-                                                <stop offset="100%" stopColor="#D97706" />
+                                            <radialGradient id="gradSunCore" cx="32" cy="32" r="16" fx="32" fy="32">
+                                                <stop offset="0%" stopColor="#FFF" stopOpacity="1" />
+                                                <stop offset="40%" stopColor="#FDE047" />
+                                                <stop offset="100%" stopColor="#F59E0B" />
+                                            </radialGradient>
+                                            <radialGradient id="gradSunRays" cx="32" cy="32" r="32" fx="32" fy="32">
+                                                <stop offset="0%" stopColor="#FDBA74" stopOpacity="0" />
+                                                <stop offset="50%" stopColor="#FDBA74" stopOpacity="0.5" />
+                                                <stop offset="100%" stopColor="#FFB52E" stopOpacity="0" />
                                             </radialGradient>
                                             <filter id="glowSun" x="-100%" y="-100%" width="300%" height="300%">
-                                                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                                                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
                                                 <feMerge>
                                                     <feMergeNode in="coloredBlur" />
                                                     <feMergeNode in="SourceGraphic" />
                                                 </feMerge>
                                             </filter>
                                         </defs>
-                                        {/* Pure Glowing Sun Orb */}
-                                        <circle cx="32" cy="32" r="18" fill="url(#gradSun)" filter="url(#glowSun)" />
+
+                                        <circle cx="32" cy="32" r="16" fill="url(#gradSunCore)" filter="url(#glowSun)" className="animate-[pulse_3s_ease-in-out_infinite]" />
                                     </svg>
                                 );
                             } else {
@@ -167,14 +171,14 @@ const WeatherCard = ({ data, units }) => {
 
             {/* Footer Info */}
             <div className="border-t border-gray-700/50 pt-6 flex flex-col gap-3 relative z-10">
-                <div className="flex items-center gap-3 text-gray-400">
-                    <div className="p-2 bg-gray-800/50 rounded-full">
+                <div className="flex items-center gap-3 text-gray-400 flex-wrap">
+                    <div className="p-2 bg-gray-800/50 rounded-full shrink-0">
                         <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
-                    <span className="font-medium text-lg text-gray-200">{name}, {data.sys?.country || "US"}</span>
+                    <span className="font-medium text-lg text-gray-200 break-words">{name}, {data.sys?.country || "US"}</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-400">
-                    <div className="p-2 bg-gray-800/50 rounded-full">
+                <div className="flex items-center gap-3 text-gray-400 flex-wrap">
+                    <div className="p-2 bg-gray-800/50 rounded-full shrink-0">
                         <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
                     <span className="font-medium">{dayName}, <span className="text-gray-500">{timeString}</span></span>

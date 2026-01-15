@@ -220,8 +220,8 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
                 {/* Sunrise & Sunset */}
                 <HighlightCard title="Sunrise & Sunset">
                     <div className="relative h-24">
-                        <svg viewBox="0 0 100 50" className="w-full h-full">
-                            <path d="M10 40 A 40 35 0 0 1 90 40" fill="none" stroke="#374151" strokeWidth="2" strokeDasharray="4 4" />
+                        <svg viewBox="0 0 100 60" className="w-full h-full overflow-visible">
+                            <path d="M10 45 A 40 35 0 0 1 90 45" fill="none" stroke="#374151" strokeWidth="2" strokeDasharray="4 4" />
                             {(() => {
                                 const now = dt;
                                 const sunrise = sys.sunrise;
@@ -232,12 +232,12 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
                                 else if (now < sunrise) percent = 0;
                                 else percent = (now - sunrise) / (sunset - sunrise);
 
-                                // SVG Path is a semi-ellipse/arc from (10,40) to (90,40)
-                                // Center (50, 40), Rx=40, Ry=35
+                                // SVG Path is a semi-ellipse/arc from (10,45) to (90,45)
+                                // Center (50, 45), Rx=40, Ry=35
 
                                 const theta = Math.PI * (1 - percent); // PI to 0
                                 const x = 50 + (40 * Math.cos(theta));
-                                const y = 40 - (35 * Math.sin(theta));
+                                const y = 45 - (35 * Math.sin(theta));
 
                                 // Day/Night Check for Tracker Icon
                                 const isDay = now >= sunrise && now < sunset;
@@ -290,7 +290,7 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
                                     </>
                                 );
                             })()}
-                            <path d="M10 40 L 90 40" stroke="none" />
+                            <path d="M10 45 L 90 45" stroke="none" />
                         </svg>
                     </div>
                     <div className="flex justify-between items-end -mt-2">

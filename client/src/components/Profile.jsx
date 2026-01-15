@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import Toast from './Toast';
 
 const DEFAULT_AVATAR = 'https://cdn.jsdelivr.net/gh/alohe/avatars/png/memo_25.png';
 
@@ -13,9 +14,15 @@ const Profile = () => {
     const [newCity, setNewCity] = useState('');
     const [uploading, setUploading] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [toast, setToast] = useState({ message: '', type: '', visible: false });
+
+    const showToast = (message, type = 'info') => {
+        setToast({ message, type, visible: true });
+    };
 
     // Defensive checks for user data
-    const savedLocs = user?.savedLocations || [];
+    // Deduplicate saved locations for display
+    const savedLocs = [...new Set(user?.savedLocations || [])];
     const userAvatarId = user?.avatarId || 'default';
     const loginCount = user?.loginCount || 0;
     const joinDate = user?.createdAt ? new Date(user.createdAt).getFullYear() : '-';
@@ -67,8 +74,14 @@ const Profile = () => {
         try {
             await addFavorite(newCity);
             setNewCity('');
+            showToast(`${newCity} added to favorites`, 'success');
         } catch (err) {
             console.error(err);
+            if (err.response && err.response.data && err.response.data.error) {
+                showToast(err.response.data.error, 'error');
+            } else {
+                showToast("Failed to add location", 'error');
+            }
         }
     };
 
@@ -316,6 +329,14 @@ const Profile = () => {
                 )}
 
             </div>
+            {/* Toast Notification */}
+            {toast.visible && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast({ ...toast, visible: false })}
+                />
+            )}
         </div>
     );
 };

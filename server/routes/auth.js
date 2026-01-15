@@ -123,15 +123,32 @@ router.put('/me', auth, async (req, res) => {
 router.post('/me/favorites', auth, async (req, res) => {
     try {
         const { city } = req.body;
+        console.log(`[DEBUG] Attempting to add favorite: ${city} for user ${req.user._id}`);
         if (!city) return res.status(400).json({ error: 'City is required' });
 
+        const trimmedCity = city.trim();
         const user = await User.findById(req.user._id);
-        if (!user.savedLocations.includes(city)) {
-            user.savedLocations.push(city);
+
+        console.log(`[DEBUG] Current favorites count: ${user.savedLocations.length}`);
+        console.log(`[DEBUG] Current favorites: ${JSON.stringify(user.savedLocations)}`);
+
+        // Case-insensitive check to prevent duplicates like "London" and "london"
+        const exists = user.savedLocations.some(loc => loc.toLowerCase() === trimmedCity.toLowerCase());
+
+        if (!exists) {
+            if (user.savedLocations.length >= 3) {
+                console.log(`[DEBUG] Limit reached (>=3). Rejecting.`);
+                return res.status(400).json({ error: 'You can only save up to 3 locations' });
+            }
+            user.savedLocations.push(trimmedCity);
             await user.save();
+            console.log(`[DEBUG] Added successfully. New count: ${user.savedLocations.length}`);
+        } else {
+            console.log(`[DEBUG] City already exists.`);
         }
         res.json(user.savedLocations);
     } catch (error) {
+        console.error(`[DEBUG] Error in /me/favorites:`, error);
         res.status(500).json({ error: 'Server error' });
     }
 });
