@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
 
+import LoadingScreen from './components/LoadingScreen';
 import { fetchWeather, fetchForecast, fetchAQI } from './api/weather';
 
 function App() {
@@ -128,7 +129,7 @@ function App() {
 
   if (authLoading) {
     console.log("App: Auth Loading...");
-    return <div className="h-screen flex items-center justify-center bg-slate-900 text-white">Loading...</div>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -259,7 +260,7 @@ function App() {
           </Routes>
         </main>
       </div>
-    </div>
+    </div >
   );
 }
 
