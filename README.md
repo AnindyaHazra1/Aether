@@ -20,10 +20,10 @@ Moving beyond generic weather apps, Aether combines real-time meteorological dat
 
 Aether isn't just about showing numbers; it's about *feeling* the weather.
 
-*   **Dynamic Atmospherics**: The interface simulates the actual weather outside. From **Starry Nights** to **Thunderstorms**, the entire UI adapts with high-fidelity backdrops and ambient glows.
-*   **Through-the-Lens Visibility**: Our proprietary Visibility Card uses a camera viewfinder aesthetic that dynamically blurs focus based on real-world fog and haze levels.
-*   **Fluid Glassmorphism**: Built on a modern glass UI stack, every element floats with calculated transparency, blurs, and border-glows that react to user interaction.
-*   **Data Fidelity**: Real-time integration with OpenWeatherMap APIs for precise forecasting, Air Quality Index (PM2.5), and UV radiation levels.
+*   **Immersive Environmental Simulation**: The interface dynamically adapts to real-time weather conditions, rendering high-fidelity backdrops that reflect current atmospheric states—from clear starry nights to heavy precipitation.
+*   **Context-Aware Visual Feedback**: Advanced visibility indicators utilize dynamic blur filters to visually represent fog and haze conditions, mimicking real-world optical effects.
+*   **Sophisticated User Interface**: Built on a modern glassmorphic design system, featuring multi-layered transparency and ambient lighting to establish a clear visual hierarchy.
+*   **Precision Meteorological Data**: Seamless integration with the OpenWeatherMap API ensures the delivery of accurate, real-time forecasting, Air Quality Index (PM2.5), and UV radiation metrics.
 
 ## ✨ Features
 
@@ -50,6 +50,37 @@ Aether isn't just about showing numbers; it's about *feeling* the weather.
 *   **Maps**: Leaflet / React-Leaflet
 *   **Weather Data**: OpenWeatherMap API
 *   **Icons**: Lucide React & Custom SVG Assets
+
+## 🚀 Getting Started
+
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/AnindyaHazra1/Aether.git
+    cd Aether
+    ```
+
+2.  **Install Dependencies**
+    ```bash
+    # Install Client
+    cd client
+    npm install
+
+    # Install Server (Optional for backend proxy)
+    cd ../server
+    npm install
+    ```
+
+3.  **Environment Setup**
+    Create a `.env` file in the `client` directory:
+    ```env
+    VITE_WEATHER_API_KEY=your_api_key_here
+    ```
+
+4.  **Launch Aether**
+    ```bash
+    # Run Frontend
+    npm run dev
+    ```
 
 ## 🤝 Contributing
 
