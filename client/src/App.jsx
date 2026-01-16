@@ -170,7 +170,7 @@ function App() {
         {/* Content */}
         {/* Content */}
         {/* Content */}
-        <main className={`flex-1 p-4 pt-4 pb-20 md:pb-6 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
+        <main className={`flex-1 p-4 pt-4 pb-32 md:pb-6 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
           {error && (
             <div className="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-bounce">
               {error}
@@ -208,8 +208,8 @@ function App() {
                   <div className="xl:col-span-1 flex flex-col gap-3">
                     {weatherData && <WeatherCard data={weatherData} units={units} />}
 
-                    {/* Map Preview */}
-                    <div className="bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 relative overflow-hidden group h-[280px] flex flex-col shrink-0 border border-white/5 shadow-lg">
+                    {/* Map Preview - Hidden on Mobile */}
+                    <div className="hidden md:flex bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 relative overflow-hidden group h-[280px] flex-col shrink-0 border border-white/5 shadow-lg">
                       <div className="flex justify-between items-center mb-4 relative z-10 shrink-0">
                         <h2 className="text-lg font-bold text-white">Radar</h2>
                         <Link to="/map" className="bg-white/10 hover:bg-white/20 transition-colors rounded-lg px-3 py-1 text-xs text-white decoration-0">Expand</Link>
