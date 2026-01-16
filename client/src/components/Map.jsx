@@ -194,9 +194,7 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.8}
-                            keepBuffer={10}
-                            updateWhenIdle={false}
-                            updateWhenZooming={false}
+                            zIndex={100}
                         />
                     </LayersControl.Overlay>
 
@@ -204,9 +202,7 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.8}
-                            keepBuffer={10}
-                            updateWhenIdle={false}
-                            updateWhenZooming={false}
+                            zIndex={100}
                         />
                     </LayersControl.Overlay>
 
@@ -214,9 +210,7 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.7}
-                            keepBuffer={10}
-                            updateWhenIdle={false}
-                            updateWhenZooming={false}
+                            zIndex={100}
                         />
                     </LayersControl.Overlay>
 
@@ -224,9 +218,7 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={1.0}
-                            keepBuffer={10}
-                            updateWhenIdle={false}
-                            updateWhenZooming={false}
+                            zIndex={100}
                         />
                     </LayersControl.Overlay>
 
@@ -234,9 +226,7 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.6}
-                            keepBuffer={10}
-                            updateWhenIdle={false}
-                            updateWhenZooming={false}
+                            zIndex={100}
                         />
                     </LayersControl.Overlay>
 
