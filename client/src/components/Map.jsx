@@ -135,7 +135,7 @@ const Map = ({ weatherData }) => {
                          line-height: 1.2;
                     }
                      .leaflet-control-layers-base label:hover,
-                    .leaflet-control-layers-overlays label:hover {
+                     .leaflet-control-layers-overlays label:hover {
                         background: rgba(255, 255, 255, 0.08);
                         border-color: rgba(255, 255, 255, 0.05);
                         transform: translateX(4px);
@@ -162,6 +162,9 @@ const Map = ({ weatherData }) => {
                 scrollWheelZoom={false}
                 style={{ height: '100%', width: '100%', background: '#111827' }}
                 attributionControl={false}
+                zoomAnimation={true}
+                fadeAnimation={true}
+                markerZoomAnimation={true}
             >
                 <LayersControl position="topright">
                     {/* Base Maps */}
@@ -187,10 +190,13 @@ const Map = ({ weatherData }) => {
                     </LayersControl.BaseLayer>
 
                     {/* Weather Data Overlays */}
-                    <LayersControl.Overlay checked name="Precipitation (Rain/Snow)">
+                    <LayersControl.Overlay name="Precipitation (Rain/Snow)">
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.8}
+                            keepBuffer={10}
+                            updateWhenIdle={false}
+                            updateWhenZooming={false}
                         />
                     </LayersControl.Overlay>
 
@@ -198,13 +204,19 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.8}
+                            keepBuffer={10}
+                            updateWhenIdle={false}
+                            updateWhenZooming={false}
                         />
                     </LayersControl.Overlay>
 
-                    <LayersControl.Overlay name="Temperature (Heatmap)">
+                    <LayersControl.Overlay checked name="Temperature (Heatmap)">
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.7}
+                            keepBuffer={10}
+                            updateWhenIdle={false}
+                            updateWhenZooming={false}
                         />
                     </LayersControl.Overlay>
 
@@ -212,6 +224,9 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={1.0}
+                            keepBuffer={10}
+                            updateWhenIdle={false}
+                            updateWhenZooming={false}
                         />
                     </LayersControl.Overlay>
 
@@ -219,6 +234,9 @@ const Map = ({ weatherData }) => {
                         <TileLayer
                             url={`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${API_KEY}`}
                             opacity={0.6}
+                            keepBuffer={10}
+                            updateWhenIdle={false}
+                            updateWhenZooming={false}
                         />
                     </LayersControl.Overlay>
 
