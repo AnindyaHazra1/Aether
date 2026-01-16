@@ -17,6 +17,7 @@ import { fetchWeather, fetchForecast, fetchAQI } from './api/weather';
 
 function App() {
   console.log("App Component Rendering..."); // DEBUG LOG
+  console.log("VITE_API_URL:", import.meta.env.VITE_API_URL); // DEBUG LOG
 
   const { user, loading: authLoading } = useAuth();
   console.log("Auth State:", { user, authLoading }); // DEBUG LOG
