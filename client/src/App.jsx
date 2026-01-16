@@ -170,7 +170,7 @@ function App() {
         {/* Content */}
         {/* Content */}
         {/* Content */}
-        <main className={`flex-1 p-4 pt-4 pb-2 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
+        <main className={`flex-1 p-4 pt-4 pb-20 md:pb-6 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
           {error && (
             <div className="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-bounce">
               {error}

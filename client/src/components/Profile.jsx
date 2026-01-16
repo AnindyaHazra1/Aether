@@ -188,6 +188,16 @@ const Profile = () => {
                             </label>
                         </div>
 
+                        {/* Mobile Only: Visible Remove Button */}
+                        {userAvatarId && userAvatarId !== 'default' && (
+                            <button
+                                onClick={() => setShowDeleteModal(true)}
+                                className="md:hidden text-red-400 text-xs font-bold uppercase tracking-wider hover:text-red-300 transition-colors"
+                            >
+                                Remove Photo
+                            </button>
+                        )}
+
                         <div>
                             <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">{user.username}</h2>
                             <p className="text-blue-200/60 font-medium">{user.email}</p>
