@@ -52,13 +52,13 @@ const WeatherCard = ({ data, units }) => {
     }, [timezone, units.time]); // Re-run if timezone OR format changes
 
     return (
-        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] pl-6 md:pl-10 pr-2 pt-0 pb-24 shadow-2xl relative overflow-hidden min-h-[310px] flex flex-col justify-between group">
+        <div className="bg-gradient-to-br from-indigo-950/80 via-purple-900/60 to-slate-900/80 backdrop-blur-2xl border border-indigo-200/20 rounded-[2rem] pl-6 md:pl-10 pr-6 py-6 shadow-2xl relative overflow-hidden min-h-[310px] flex flex-col justify-between group">
 
             {/* Background Glow Effect */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/30 rounded-full blur-[100px] group-hover:bg-purple-500/40 transition-all duration-500"></div>
 
             {/* Main Content Layout */}
-            <div className="relative z-10 flex justify-between items-center gap-4">
+            <div className="relative z-10 flex-1 flex justify-between items-center gap-4">
                 <div>
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tighter drop-shadow-lg">
                         {temperature}°{units.temp === 'imperial' ? 'F' : ''}
