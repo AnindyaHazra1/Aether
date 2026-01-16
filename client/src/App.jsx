@@ -168,7 +168,9 @@ function App() {
 
         {/* Content */}
         {/* Content */}
-        <main className={`flex-1 p-4 md:p-6 pt-4 md:pt-10 pb-24 md:pb-6 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
+        {/* Content */}
+        {/* Content */}
+        <main className={`flex-1 p-4 pt-4 pb-2 h-full overflow-y-auto relative z-10 custom-scrollbar ${location.pathname === '/login' || location.pathname === '/signup' ? 'flex items-center justify-center' : ''}`}>
           {error && (
             <div className="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50 animate-bounce">
               {error}
@@ -178,9 +180,9 @@ function App() {
 
           <Routes>
             <Route path="/" element={
-              <div className="max-w-[1600px] mx-auto flex flex-col gap-6 md:gap-8">
+              <div className="max-w-[1600px] mx-auto flex flex-col gap-3">
                 {/* Global Search Header */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 relative z-40">
                   {/* Quick User Location Actions (Desktop) - REMOVED */}
 
                   <div className="flex items-center gap-4 w-full md:w-auto md:ml-auto">
@@ -201,9 +203,9 @@ function App() {
                 </div>
 
                 {/* Main Content Grid */}
-                <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 xl:grid-cols-4 gap-3">
                   {/* Left Column (Weather Card & Quick Info) */}
-                  <div className="xl:col-span-1 flex flex-col gap-6">
+                  <div className="xl:col-span-1 flex flex-col gap-3">
                     {weatherData && <WeatherCard data={weatherData} units={units} />}
 
                     {/* Map Preview */}

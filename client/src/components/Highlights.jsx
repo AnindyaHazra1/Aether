@@ -113,7 +113,7 @@ const Highlights = ({ weatherData, aqiData, forecastData, forecastError, units }
         <div className="flex flex-col gap-0">
             <h2 className="text-xl font-bold text-white mb-4">Today's Highlight</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 
                 {/* Air Quality Index Card */}
                 <HighlightCard title="Air Quality Index">
