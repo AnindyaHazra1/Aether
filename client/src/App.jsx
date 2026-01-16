@@ -220,7 +220,7 @@ function App() {
                     {/* Favorites Section */}
                     {user && (user.location || (user.savedLocations && user.savedLocations.length > 0)) && (
                       <div className="bg-[#202B3B]/80 backdrop-blur-md rounded-[2rem] p-6 shrink-0 border border-white/5 shadow-lg">
-                        <div className="flex items-center gap-3 mb-4">
+                        <div className="flex items-center justify-between mb-4">
                           <h2 className="text-lg font-bold text-white">
                             Saved Locations
                           </h2>
