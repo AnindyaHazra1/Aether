@@ -242,11 +242,6 @@ const Map = ({ weatherData }) => {
                 </Marker>
                 <ChangeView center={position} />
             </MapContainer >
-
-            {/* Debug Indicator - Temporary */}
-            <div className="absolute bottom-1 right-1 z-[1000] bg-black/70 text-white text-[10px] px-2 py-1 rounded-full pointer-events-none">
-                System: {API_KEY ? 'Online 🟢' : 'Key Missing 🔴'}
-            </div>
         </div >
     );
 };
