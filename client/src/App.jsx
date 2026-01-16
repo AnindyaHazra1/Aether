@@ -181,7 +181,18 @@ function App() {
               <div className="max-w-[1600px] mx-auto flex flex-col gap-6 md:gap-8">
                 {/* Global Search Header */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
-                  <div className="flex items-center gap-4 w-full md:w-auto">
+                  {/* Quick User Location Actions (Desktop) */}
+                  {user && user.location && (
+                    <button
+                      onClick={() => handleSearch(user.location)}
+                      className="hidden md:flex px-4 py-2 bg-blue-600/20 hover:bg-blue-600 hover:text-white text-blue-400 border border-blue-500/30 rounded-xl transition-all text-sm font-bold items-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                      <span>Back Home</span>
+                    </button>
+                  )}
+
+                  <div className="flex items-center gap-4 w-full md:w-auto md:ml-auto">
                     <div className="bg-[#202B3B]/90 backdrop-blur-xl rounded-2xl px-4 py-3 flex items-center gap-3 border border-white/10 shadow-lg w-full md:w-96">
                       <button onClick={() => handleSearch(searchQuery)}>
                         <svg className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -196,17 +207,6 @@ function App() {
                       />
                     </div>
                   </div>
-
-                  {/* Quick User Location Actions (Desktop) */}
-                  {user && user.location && (
-                    <button
-                      onClick={() => handleSearch(user.location)}
-                      className="hidden md:flex px-4 py-2 bg-blue-600/20 hover:bg-blue-600 hover:text-white text-blue-400 border border-blue-500/30 rounded-xl transition-all text-sm font-bold items-center gap-2"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                      <span>Back Home</span>
-                    </button>
-                  )}
                 </div>
 
                 {/* Main Content Grid */}
